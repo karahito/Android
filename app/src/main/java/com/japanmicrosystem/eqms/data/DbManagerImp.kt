@@ -12,7 +12,7 @@ import javax.inject.Inject
 @Module(includes = [
     (DatabaseModule::class)
 ])
-class DbManagerImp @Inject constructor(private val realm:Realm):DbManager {
+class DbManagerImp @Inject constructor(internal val realm:Realm):DbManager {
     override fun close() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         realm.close()
@@ -32,6 +32,23 @@ class DbManagerImp @Inject constructor(private val realm:Realm):DbManager {
             realm.run {
                 beginTransaction()
                 copyToRealm(model)
+            }
+            model
+        }catch (e:RealmException){
+            Timber.e(e)
+            model
+        }finally {
+            realm.commitTransaction()
+        }
+    }
+
+    override fun <T : RealmObject> add(model: List<T>): List<T> {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Timber.d("add $model")
+        return try{
+            realm.run {
+                beginTransaction()
+                copyToRealmOrUpdate(model)
             }
             model
         }catch (e:RealmException){

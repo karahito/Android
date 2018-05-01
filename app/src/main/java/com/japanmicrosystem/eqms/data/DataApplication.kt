@@ -1,11 +1,11 @@
 package com.japanmicrosystem.eqms.data
 
-import android.app.Application
+import dagger.android.support.DaggerApplication
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import timber.log.Timber
 
-abstract class DataApplication:Application() {
+abstract class DataApplication:DaggerApplication() {
 
     internal var config:RealmConfiguration? = null
 

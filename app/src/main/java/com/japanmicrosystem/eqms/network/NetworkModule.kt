@@ -1,4 +1,4 @@
-package com.japanmicrosystem.eqms.domain
+package com.japanmicrosystem.eqms.network
 
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
@@ -20,7 +20,7 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideOkHttp() = OkHttpClient.Builder()
+    fun provideOkHttp(): OkHttpClient = OkHttpClient.Builder().build()
 
     @Singleton
     @Provides
@@ -30,5 +30,9 @@ class NetworkModule {
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
+
+    @Singleton
+    @Provides
+    fun provideService(retrofit: Retrofit) = retrofit.create(InventoriesService::class.java)
 
 }

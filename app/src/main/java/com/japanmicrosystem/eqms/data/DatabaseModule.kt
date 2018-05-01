@@ -1,13 +1,15 @@
 package com.japanmicrosystem.eqms.data
 
+import com.japanmicrosystem.eqms.MyApplication
 import dagger.Module
 import dagger.Provides
 import io.realm.Realm
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @Module
-class DatabaseModule(private val application: DataApplication) {
+class DatabaseModule {
     @Singleton
     @Provides
-    fun provideRealm(): Realm = application.getRealm()
+    fun provideRealm(application:MyApplication): Realm = application.getRealm()
 }
